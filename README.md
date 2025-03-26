@@ -33,8 +33,7 @@ Bot Telegram untuk menyimpan postingan atau file yang dapat diakses melalui link
 
 ### 📋 Prasyarat
 1. Tambahkan bot ke Channel Database sebagai **Admin**
-2. Tambahkan bot ke Channel ForceSub sebagai **Admin**
-3. Tambahkan bot ke Group ForceSub sebagai **Admin**
+2. Tambahkan bot ke Channel/group ForceSub sebagai **Admin**
 
 ## ⚙️ Konfigurasi
 ### Variabel Wajib
