@@ -11,8 +11,12 @@ class Data:
   /help - Menampilkan pesan bantuan ini
   /ping - Memeriksa latensi bot
   /uptime - Menampilkan waktu aktif bot
-  
+"""
+    HELP_AD = """
+✨ <b>Bantuan Pengguna Bot</b> ✨
+
 <b>Perintah Admin:</b>
+  /settings - Untuk setting fsub dan lain-lain
   /users - Statistik pengguna 
   /batch - Membuat multi post dalam satu link
   /broadcast - Mengirim pesan siaran ke semua pengguna
@@ -80,11 +84,18 @@ async def handler(c: Bot, query: CallbackQuery):
             pass
     elif data == "help":
         try:
-            await query.message.edit_text(
-                text=Data.HELP,
-                disable_web_page_preview=True,
-                reply_markup=InlineKeyboardMarkup(Data.buttons),
-            )
+            if query.from_user.id != ADMINS:
+                await query.message.edit_text(
+                    text=Data.HELP,
+                    disable_web_page_preview=True,
+                    reply_markup=InlineKeyboardMarkup(Data.buttons),
+                )
+            else:
+                await query.message.edit_text(
+                    text=Data.HELP_AD,
+                    disable_web_page_preview=True,
+                    reply_markup=InlineKeyboardMarkup(Data.buttons),
+                )
         except Exception:
             pass
     elif data == "close":

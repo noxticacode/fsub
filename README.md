@@ -56,6 +56,7 @@ Bot Telegram untuk menyimpan postingan atau file yang dapat diakses melalui link
 -  [Dan](https://github.com/delivrance) for [Pyrogram](https://github.com/pyrogram/pyrogram)
 -  [Risman](https://github.com/mrismanaziz) for [File-Sharing-Man](https://github.com/mrismanaziz/File-Sharing-Man)
 -  Based on [CodeXBotz](https://github.com/CodeXBotz) Repo [File-Sharing-Bot](https://github.com/CodeXBotz/File-Sharing-Bot)
+-  [Arang](https://github.com/ArangVolte) for [File-Sharing](https://github.com/ArangVolte/File-Sharing)
 
 
 ## 📑 License
