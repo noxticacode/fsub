@@ -43,6 +43,7 @@ Bot Telegram untuk menyimpan postingan atau file yang dapat diakses melalui link
 | `API_ID` | Dapatkan dari [my.telegram.org](https://my.telegram.org) |
 | `BOT_TOKEN` | Dapatkan dari [@BotFather](https://t.me/BotFather) |
 | `CHANNEL_ID` | ID Channel Database (contoh: -100xxxxxxxx) |
+| `ADMINS` | ID user|
 
 
 ## 👨🏻‍💻 Credits
