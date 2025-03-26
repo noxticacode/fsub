@@ -45,11 +45,6 @@ Bot Telegram untuk menyimpan postingan atau file yang dapat diakses melalui link
 | `BOT_TOKEN` | Dapatkan dari [@BotFather](https://t.me/BotFather) |
 | `CHANNEL_ID` | ID Channel Database (contoh: -100xxxxxxxx) |
 
-### Variabel Opsional
-| Variabel | Deskripsi | Default |
-|----------|-----------|---------|
-| `CUSTOM_CAPTION` | Teks kustom untuk caption file | - |
-| `DISABLE_CHANNEL_BUTTON` | Nonaktifkan tombol channel | False |
 
 ## 👨🏻‍💻 Credits
 
