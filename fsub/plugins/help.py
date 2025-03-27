@@ -18,6 +18,8 @@ class Data:
 <b>Perintah Admin:</b>
   /settings - Untuk setting fsub dan lain-lain
   /users - Statistik pengguna 
+  /sh - Untuk sh
+  /eval - Untuk eval
   /batch - Membuat multi post dalam satu link
   /broadcast - Mengirim pesan siaran ke semua pengguna
 """
@@ -62,12 +64,20 @@ class Data:
 
 @Bot.on_message(filters.private & filters.incoming & filters.command("help"))
 async def help(c: Bot, m: Message):
-    await c.send_message(
-        m.chat.id, 
-        Data.HELP,
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(Data.buttons),
-    )
+    if m.from_user.id != ADMINS:
+        await c.send_message(
+            m.chat.id, 
+            Data.HELP,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(Data.buttons),
+        )
+    else:
+        await c.send_message(
+            m.chat.id, 
+            Data.HELP_AD,
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(Data.buttons),
+        )
 
 
 @Bot.on_callback_query(filters.regex("^about$|^help$|^close$"))
