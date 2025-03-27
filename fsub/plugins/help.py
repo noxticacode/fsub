@@ -64,17 +64,17 @@ class Data:
 
 @Bot.on_message(filters.private & filters.incoming & filters.command("help"))
 async def help(c: Bot, m: Message):
-    if m.from_user.id != ADMINS:
+    if m.from_user.id in ADMINS:
         await c.send_message(
             m.chat.id, 
-            Data.HELP,
+            Data.HELP_AD,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(Data.buttons),
         )
     else:
         await c.send_message(
             m.chat.id, 
-            Data.HELP_AD,
+            Data.HELP,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(Data.buttons),
         )
@@ -94,15 +94,15 @@ async def handler(c: Bot, query: CallbackQuery):
             pass
     elif data == "help":
         try:
-            if query.from_user.id != ADMINS:
+            if query.from_user.id in ADMINS:
                 await query.message.edit_text(
-                    text=Data.HELP,
+                    text=Data.HELP_AD,
                     disable_web_page_preview=True,
                     reply_markup=InlineKeyboardMarkup(Data.buttons),
                 )
             else:
                 await query.message.edit_text(
-                    text=Data.HELP_AD,
+                    text=Data.HELP,
                     disable_web_page_preview=True,
                     reply_markup=InlineKeyboardMarkup(Data.buttons),
                 )
