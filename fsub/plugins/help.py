@@ -30,11 +30,10 @@ class Data:
 
     mbuttons = [
         [
-            InlineKeyboardButton("ℹ️ Tentang", callback_data="about"),
-            InlineKeyboardButton("❌ Tutup", callback_data="close")
+            InlineKeyboardButton("🆘 Bantuan", callback_data="help")
         ],
         [
-            InlineKeyboardButton("🆘 Bantuan", callback_data="help")
+            InlineKeyboardButton("❌ Tutup", callback_data="close")
         ]
     ]
 
