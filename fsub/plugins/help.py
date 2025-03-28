@@ -39,7 +39,6 @@ class Data:
 
     buttons = [
         [
-            InlineKeyboardButton("📚 Bantuan", callback_data="help"),
             InlineKeyboardButton("ℹ️ Tentang", callback_data="about")
         ],
         [
