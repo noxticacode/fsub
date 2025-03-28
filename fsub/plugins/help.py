@@ -53,7 +53,7 @@ class Data:
 
 <b>⚙️ Teknologi:</b>
 • Framework: <a href='https://docs.pyrofork.org'>Pyrofork</a>
-• Basis Kode: <a href='https://github.com/CodeXBotz/File-Sharing-Bot'>File-Sharing-Man</a>
+• Basis Kode: <a href='https://github.com/CodeXBotz/File-Sharing-Bot'>File-Sharing</a>
 • Pengembangan Ulang: <a href='https://github.com/ArangVolte/File-Sharing'>File-Sharing</a>
 
 🔍 Bot ini membantu Anda menyimpan dan berbagi konten dengan mudah!
