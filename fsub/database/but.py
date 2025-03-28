@@ -43,7 +43,7 @@ async def start_button(client):
 async def fsub_button(client, message):
     fsub = await full_fsub()
     if not fsub:
-        return None
+        return True
         
     buttons = []
     row = []
