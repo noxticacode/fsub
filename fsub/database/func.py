@@ -13,7 +13,7 @@ async def subscribed(filter, client, update):
     if user_id in ADMINS:
         return True
     sub = await full_fsub()
-    if sub is None:
+    if not sub:
         return False
     for channel_id in sub:
         try:

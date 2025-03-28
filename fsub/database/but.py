@@ -5,7 +5,7 @@ from pyrogram.types import InlineKeyboardButton
 
 async def start_button(client):
     fsub = await full_fsub()
-    if fsub is None:
+    if not fsub:
         buttons = [
             [
                 InlineKeyboardButton(text="📚 Bantuan", callback_data="help"),
