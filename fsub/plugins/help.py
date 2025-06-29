@@ -56,6 +56,8 @@ class Data:
 • Basis Kode: <a href='https://github.com/CodeXBotz/File-Sharing-Bot'>File-Sharing</a>
 • Pengembangan Ulang: <a href='https://github.com/ArangVolte/File-Sharing'>File-Sharing</a>
 
+👨‍💻 Develover: {}
+
 🔍 Bot ini membantu Anda menyimpan dan berbagi konten dengan mudah!
 """
 
@@ -84,7 +86,7 @@ async def handler(c: Bot, query: CallbackQuery):
     if data == "about":
         try:
             await query.message.edit_text(
-                text=Data.ABOUT.format(c.username),
+                text=Data.ABOUT.format(c.username, OWNER),
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup(Data.mbuttons),
             )
