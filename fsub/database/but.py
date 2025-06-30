@@ -24,7 +24,7 @@ async def start_button(client):
                 link = await client.export_chat_invite_link(fsub[i])
             except ChatAdminRequired:
                 link = f"https://t.me/{chat.username}" if chat.username else "#"
-            row.append(InlineKeyboardButton(f"🔗 {chat.title}", url=link))
+            row.append(InlineKeyboardButton(f"🔗Join {chat.title}", url=link))
             
             if len(row) == 2 or i == len(fsub) - 1:
                 buttons.append(row)
@@ -52,7 +52,7 @@ async def fsub_button(client, message):
                     link = await client.export_chat_invite_link(fsub[i])
                 except ChatAdminRequired:
                     link = f"https://t.me/{chat.username}" if chat.username else "#"
-                row.append(InlineKeyboardButton(f"🔗 {chat.title}", url=link))
+                row.append(InlineKeyboardButton(f"🔗Join {chat.title}", url=link))
                 
                 if len(row) == 2 or i == len(fsub) - 1:
                     buttons.append(row)
