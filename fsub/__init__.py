@@ -15,6 +15,7 @@ class Bot(Client):
             api_hash=API_HASH,
             plugins=dict(root="fsub/plugins"),
             bot_token=BOT_TOKEN,
+            workers=4,
             in_memory=True,
         )
         self.LOGGER = LOGGER
