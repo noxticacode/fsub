@@ -12,14 +12,27 @@ async def subscribed(filter, client, update):
     user_id = update.from_user.id
     if user_id in ADMINS:
         return True
+
     sub = await full_fsub()
+    if not sub:
+        # Tidak ada channel yang perlu dicek, langsung lolos
+        return True
+
     for channel_id in sub:
         try:
             member = await client.get_chat_member(chat_id=channel_id, user_id=user_id)
+            if member.status not in [
+                enums.ChatMemberStatus.OWNER,
+                enums.ChatMemberStatus.ADMINISTRATOR,
+                enums.ChatMemberStatus.MEMBER,
+            ]:
+                return False
         except UserNotParticipant:
             return False
+        except Exception:
+            return False  # fallback untuk error lain
 
-    return member.status in [enums.ChatMemberStatus.OWNER, enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.MEMBER]
+    return True
 
 
 async def encode(string):
