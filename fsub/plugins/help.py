@@ -52,7 +52,7 @@ class Data:
 @{} adalah Bot untuk menyimpan postingan atau file yang dapat diakses melalui link khusus.
 
 <b>⚙️ Teknologi:</b>
-• Framework: <a href='https://docs.pyrofork.org'>Pyrofork</a>
+• Framework: <a href='https://pyrofork.wulan17.dev'>Pyrofork</a>
 • Basis Kode: <a href='https://github.com/CodeXBotz/File-Sharing-Bot'>File-Sharing</a>
 • Pengembangan Ulang: <a href='https://github.com/ArangVolte/File-Sharing'>File-Sharing</a>
 
