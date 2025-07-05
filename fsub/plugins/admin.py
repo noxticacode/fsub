@@ -61,13 +61,13 @@ async def send_text(client, message):
                     await broadcast_msg.copy(chat_id, protect_content=anti)
                     successful += 1
                 except (UserIsBlocked, PeerIdInvalid):
-                    del_user(chat_id)
+                    await del_user(chat_id)
                     blocked += 1
                 except UserDeactivated:
-                    del_user(chat_id)
+                    await del_user(chat_id)
                     deleted += 1
                 except Exception:
-                    del_user(chat_id)
+                    await del_user(chat_id)
                     unsuccessful += 1
                 total += 1
         status = f"""📊 <b>Hasil Broadcast</b> 📊
