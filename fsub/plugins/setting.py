@@ -79,6 +79,15 @@ async def back_to_main(client, callback_query):
 
 # ───── Custom Caption ─────
 @Bot.on_callback_query(filters.regex("^custom$"))
+async def caption_menu(client, callback_query):
+    keyboard = InlineKeyboardMarkup([
+        [InlineKeyboardButton("✏️ Ubah Caption", callback_data="edit_caption")],
+        [InlineKeyboardButton("🗑 Hapus Caption", callback_data="hapus_caption")],
+        [InlineKeyboardButton("← Kembali", callback_data="back_to_main")]
+    ])
+    await callback_query.edit_message_text("Silahkan pilih opsi caption:", reply_markup=keyboard)
+    
+@Bot.on_callback_query(filters.regex("^edit_caption$"))
 async def caption_button(client, callback_query):
     try:
         isi = await client.ask(
@@ -95,6 +104,17 @@ async def caption_button(client, callback_query):
         await callback_query.edit_message_text("✅ Caption berhasil diupdate!")
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Terjadi error: {e}")
+
+@Bot.on_callback_query(filters.regex("^hapus_caption$"))
+async def hapus_caption(client, callback_query):
+    try:
+        await delete_caption(client.me.id)
+        await callback_query.edit_message_text("✅ Caption berhasil dihapus!", reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("← Kembali", callback_data="back_to_main")]
+        ]))
+    except Exception as e:
+        await callback_query.edit_message_text(f"❌ Terjadi error: {e}")
+
 
 # ───── Force Subscribe Menu ─────
 @Bot.on_callback_query(filters.regex("^force_sub$"))

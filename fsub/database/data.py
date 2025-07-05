@@ -62,12 +62,20 @@ async def get_protect(user_id: int):
 
 
 # --- Caption ---
+
+# Menambah atau memperbarui caption
 async def add_caption(user_id: int, caption: str):
     if caption_table.contains(Q._id == user_id):
         caption_table.update({"caption": caption}, Q._id == user_id)
     else:
         caption_table.insert({"_id": user_id, "caption": caption})
 
+# Mengambil caption dari database
 async def caption_info(user_id: int):
     r = caption_table.get(Q._id == user_id)
     return r.get("caption") if r else None
+
+# Menghapus caption dari database
+async def delete_caption(user_id: int):
+    if caption_table.contains(Q._id == user_id):
+        caption_table.remove(Q._id == user_id)

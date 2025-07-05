@@ -59,7 +59,7 @@ async def start_command(client, message):
     await temp_msg.delete()
 
     # Tarik setting di luar loop
-    cust = await caption_info(client.me.id)
+    xx = await caption_info(client.me.id)
     disable_button = await get_disable(client.me.id)
     protect_media = await get_protect(client.me.id)
 
@@ -67,15 +67,8 @@ async def start_command(client, message):
         try:
             original_caption = msg.caption.html if msg.caption else ""
 
-            if cust and msg.document:
-                try:
-                    caption = cust.format(
-                        previouscaption=original_caption,
-                        filename=msg.document.file_name
-                    )
-                except Exception as e:
-                    print(f"[Caption Format Error] {e}")
-                    caption = original_caption
+            if xx is not None:
+                caption = f"{original_caption}\n\n{xx}"
             else:
                 caption = original_caption
 
