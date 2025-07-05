@@ -32,14 +32,14 @@ async def get_users(client, message):
         chat_id=message.chat.id, 
         text="<code>🔄 Memproses data pengguna...</code>"
     )
-    users = full_userbase()
+    users = await full_userbase()
     await msg.edit(f"👥 <b>Total Pengguna Bot:</b> <code>{len(users)}</code>")
 
 
 @Bot.on_message(filters.command("broadcast") & filters.user(ADMINS))
 async def send_text(client, message):
     if message.reply_to_message:
-        query = full_userbase()
+        query = await full_userbase()
         broadcast_msg = message.reply_to_message
         total = 0
         successful = 0
