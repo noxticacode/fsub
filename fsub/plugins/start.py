@@ -8,9 +8,9 @@ from fsub import *
 async def start_command(client, message):
     user_id = message.from_user.id
 
-    if not await present_user(user_id):
+    if not present_user(user_id):
         try:
-            await add_user(user_id)
+            add_user(user_id)
         except:
             pass
 

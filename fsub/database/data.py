@@ -10,16 +10,16 @@ protect = db.table('protect')
 caption_table = db.table('caption')
 
 # --- Broadcast ---
-async def present_user(user_id: int):
+def present_user(user_id: int):
     return user_data.contains(Q._id == user_id)
 
-async def add_user(user_id: int):
+def add_user(user_id: int):
     user_data.insert({'_id': user_id})
 
-async def full_userbase():
+def full_userbase():
     return [doc['_id'] for doc in user_data.all()]
 
-async def del_user(user_id: int):
+def del_user(user_id: int):
     user_data.remove(Q._id == user_id)
 
 

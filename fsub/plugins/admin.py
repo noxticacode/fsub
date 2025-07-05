@@ -32,14 +32,14 @@ async def get_users(client, message):
         chat_id=message.chat.id, 
         text="<code>🔄 Memproses data pengguna...</code>"
     )
-    users = await full_userbase()
+    users = full_userbase()
     await msg.edit(f"👥 <b>Total Pengguna Bot:</b> <code>{len(users)}</code>")
 
 
 @Bot.on_message(filters.command("broadcast") & filters.user(ADMINS))
 async def send_text(client, message):
     if message.reply_to_message:
-        query = await full_userbase()
+        query = full_userbase()
         broadcast_msg = message.reply_to_message
         total = 0
         successful = 0
@@ -61,13 +61,13 @@ async def send_text(client, message):
                     await broadcast_msg.copy(chat_id, protect_content=anti)
                     successful += 1
                 except (UserIsBlocked, PeerIdInvalid):
-                    await del_user(chat_id)
+                    del_user(chat_id)
                     blocked += 1
                 except UserDeactivated:
-                    await del_user(chat_id)
+                    del_user(chat_id)
                     deleted += 1
                 except Exception:
-                    await del_user(chat_id)
+                    del_user(chat_id)
                     unsuccessful += 1
                 total += 1
         status = f"""📊 <b>Hasil Broadcast</b> 📊
