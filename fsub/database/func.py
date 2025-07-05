@@ -13,8 +13,8 @@ async def subscribed(filter, client, update):
     if user_id in ADMINS:
         return True
     sub = await full_fsub()
-    if not sub:
-        return False
+    if sub is None:
+        return True
     for channel_id in sub:
         try:
             member = await client.get_chat_member(chat_id=channel_id, user_id=user_id)
