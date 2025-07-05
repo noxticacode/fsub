@@ -50,7 +50,7 @@ async def send_text(client, message):
         pls_wait = await message.reply(
             "📢 <code>Memulai broadcast, harap tunggu...</code>"
         )
-        anti = await anti_info(client.me.id)
+        anti = await get_protect(client.me.id)
         for chat_id in query:
             if chat_id not in ADMINS:
                 try:
