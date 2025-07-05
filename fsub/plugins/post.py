@@ -61,7 +61,7 @@ async def channel_post(client: Bot, message: Message):
         disable_web_page_preview=True,
     )
 
-    if not await disable_info(client.me.id):
+    if not await get_disable(client.me.id):
         try:
             await post_message.edit_reply_markup(reply_markup)
         except FloodWait as e:
@@ -73,7 +73,7 @@ async def channel_post(client: Bot, message: Message):
 
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_DB))
 async def new_post(client: Bot, message: Message):
-    if await disable_info(client.me.id):
+    if await get_disable(client.me.id):
         return
     converted_id = message.id * abs(client.db_channel.id)
     string = f"get-{converted_id}"
