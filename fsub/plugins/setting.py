@@ -142,9 +142,9 @@ async def force_sub_menu(client, callback_query):
                 except:
                     title = "❓ Unknown"
                 teks += f"📣 {title} | `{ch_id}`\n"
-                buttons.append([InlineKeyboardButton("🗑 Hapus", callback_data="fsub_hapus")])
+                buttons.append([InlineKeyboardButton("🗑 Hapus Channel Fsub", callback_data="fsub_hapus")])
 
-        buttons.append([InlineKeyboardButton("➕ Tambah Channel FSub", callback_data="fsub_tambah")])
+        buttons.append([InlineKeyboardButton("➕ Tambah Channel Fsub", callback_data="fsub_tambah")])
         buttons.append([InlineKeyboardButton("🔙 Kembali", callback_data="back_to_main")])
 
         await callback_query.edit_message_text(teks, reply_markup=InlineKeyboardMarkup(buttons))
@@ -255,7 +255,7 @@ async def admin_menu(client, callback_query):
                 except:
                     name = "❓ Unknown"
                 teks += f"👤 {name} | `{uid}`\n"
-                buttons.append([InlineKeyboardButton("🗑 Hapus", callback_data="admin_del")])
+                buttons.append([InlineKeyboardButton("🗑 Hapus Admin", callback_data="admin_del")])
 
         buttons.append([InlineKeyboardButton("➕ Tambah Admin", callback_data="admin_tambah")])
         buttons.append([InlineKeyboardButton("🔙 Kembali", callback_data="back_to_main")])
