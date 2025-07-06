@@ -47,15 +47,10 @@ async def batch(c: Bot, message: Message):
     string = f"get-{f_msg_id * abs(c.db_channel.id)}-{s_msg_id * abs(c.db_channel.id)}"
     base64_string = await encode(string)
     link = f"https://t.me/{c.username}?start={base64_string}"
-    reply_markup = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton(
-                    "Bagikan Link", url=f"https://telegram.me/share/url?url={link}"
-                )
-            ]
-        ]
-    )
+    reply_markup = InlineKeyboardMarkup([
+    [InlineKeyboardButton("🔗 Buka Link", url=link)],
+    [InlineKeyboardButton("📤 Bagikan ke Telegram", url=f"https://telegram.me/share/url?url={link}")]
+    ])
     await second_message.reply_text(
         f"Link: {link}",
         quote=True,
