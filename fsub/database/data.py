@@ -8,6 +8,26 @@ fsub = db.table('fsub')
 info = db.table('info')
 protect = db.table('protect')
 caption_table = db.table('caption')
+admin = db.table('admin')
+
+# --- Admin ---
+# Mengecek apakah user adalah admin
+async def is_admin(user_id: int):
+    return admin.contains(Q._id == user_id)
+
+# Menambahkan admin
+async def add_admin(user_id: int):
+    if not admin.contains(Q._id == user_id):
+        admin.insert({'_id': user_id})
+
+# Menghapus admin
+async def remove_admin(user_id: int):
+    if admin.contains(Q._id == user_id):
+        admin.remove(Q._id == user_id)
+
+# Mendapatkan seluruh admin
+async def all_admins():
+    return [doc['_id'] for doc in admin.all()]
 
 # --- Broadcast ---
 def present_user(user_id: int):
