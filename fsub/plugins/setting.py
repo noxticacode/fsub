@@ -255,7 +255,7 @@ async def admin_menu(client, callback_query):
                 except:
                     name = "❓ Unknown"
                 teks += f"👤 {name} | `{uid}`\n"
-                buttons.append([InlineKeyboardButton("🗑 Hapus", callback_data="admin_hapus")])
+                buttons.append([InlineKeyboardButton("🗑 Hapus", callback_data="admin_del")])
 
         buttons.append([InlineKeyboardButton("➕ Tambah Admin", callback_data="admin_tambah")])
         buttons.append([InlineKeyboardButton("🔙 Kembali", callback_data="back_to_main")])
@@ -293,7 +293,7 @@ async def tambah_admin(client, callback_query):
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error: {e}")
 
-@Bot.on_callback_query(filters.regex("^admin_hapus$"))
+@Bot.on_callback_query(filters.regex("^admin_del$"))
 async def list_admins(client, callback_query):
     try:
         admins = await all_admins()
@@ -307,28 +307,28 @@ async def list_admins(client, callback_query):
                 name = user.first_name
             except:
                 name = "❓ Unknown"
-            buttons.append([InlineKeyboardButton(f"🗑 {name}", callback_data=f"confirm_admin_hapus_{uid}")])
+            buttons.append([InlineKeyboardButton(f"🗑 {name}", callback_data=f"confirm_admin_del_{uid}")])
 
         buttons.append([InlineKeyboardButton("🔙 Kembali", callback_data="admin_menu")])
         await callback_query.edit_message_text("Pilih admin untuk dihapus:", reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error: {e}")
 
-@Bot.on_callback_query(filters.regex("^confirm_admin_hapus_"))
+@Bot.on_callback_query(filters.regex("^confirm_admin_del_"))
 async def confirm_hapus_admins(client, callback_query):
     try:
         user_id = int(callback_query.data.split("_")[-1])  # FIXED HERE
         await callback_query.edit_message_text(
             f"⚠️ Yakin ingin menghapus admin `{user_id}`?",
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("✅ Ya", callback_data=f"hapus_admin_{user_id}"),
+                [InlineKeyboardButton("✅ Ya", callback_data=f"del_admin_{user_id}"),
                  InlineKeyboardButton("❌ Batal", callback_data="admin_hapus")]
             ])
         )
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error saat konfirmasi: {e}")
 
-@Bot.on_callback_query(filters.regex("^hapus_admin_"))
+@Bot.on_callback_query(filters.regex("^del_admin_"))
 async def hapus_admin(client, callback_query):
     try:
         user_id = int(callback_query.data.split("_")[-1])
