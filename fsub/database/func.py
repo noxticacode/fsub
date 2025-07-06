@@ -10,7 +10,7 @@ from fsub import *
 
 async def subscribed(filter, client, update):
     user_id = update.from_user.id
-    if user_id in ADMINS:
+    if user_id in ADMINS and await is_admin(user_id):
         return True
 
     sub = await full_fsub()
