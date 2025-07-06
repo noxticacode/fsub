@@ -87,7 +87,6 @@ async def caption_menu(client, callback_query):
         teks = "**📝 Caption Aktif:**\n"
         teks += f"`{current}`\n\n" if current else "`(Belum ada caption)`\n\n"
         teks += "Silahkan pilih opsi caption:"
-
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton("✏️ Ubah Caption", callback_data="edit_caption")],
             [InlineKeyboardButton("🗑 Hapus Caption", callback_data="hapus_caption")],
@@ -97,7 +96,6 @@ async def caption_menu(client, callback_query):
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error: {e}")
 
-    
 @Bot.on_callback_query(filters.regex("^edit_caption$"))
 async def caption_button(client, callback_query):
     try:
@@ -126,7 +124,6 @@ async def hapus_caption(client, callback_query):
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Terjadi error: {e}")
 
-
 # ───── Force Subscribe Menu ─────
 @Bot.on_callback_query(filters.regex("^force_sub$"))
 async def force_sub_menu(client, callback_query):
@@ -154,16 +151,12 @@ async def force_sub_menu(client, callback_query):
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Terjadi error: {e}")
 
-
-# ───── Tambah Channel FSub ─────
 @Bot.on_callback_query(filters.regex("^fsub_tambah$"))
 async def add_fsub_channel(client, callback_query):
     await callback_query.edit_message_text(
         "**➕ Tambah Channel FSub**\n\n"
         "Kirim ID Channel (diawali -100)\nContoh: -1001234567890",
-        reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("❌ Batalkan", callback_data="force_sub")]
-        ])
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("❌ Batalkan", callback_data="force_sub")]])
     )
     try:
         response = await client.ask(
@@ -189,14 +182,11 @@ async def add_fsub_channel(client, callback_query):
         await add_fsub(channel_id)
         await callback_query.edit_message_text(
             f"✅ Channel ditambahkan: `{channel_id}` - {chat.title}",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🔙 Kembali", callback_data="force_sub")]
-            ])
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Kembali", callback_data="force_sub")]])
         )
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Terjadi error: {e}")
 
-# ───── Hapus Channel FSub ─────
 @Bot.on_callback_query(filters.regex("^fsub_hapus$"))
 async def list_fsub_channels(client, callback_query):
     try:
@@ -212,8 +202,8 @@ async def list_fsub_channels(client, callback_query):
             except:
                 title = "❓ Unknown"
             buttons.append([InlineKeyboardButton(f"🗑 {title}", callback_data=f"confirm_hapus_{ch_id}")])
-        buttons.append([InlineKeyboardButton("🔙 Kembali", callback_data="force_sub")])
 
+        buttons.append([InlineKeyboardButton("🔙 Kembali", callback_data="force_sub")])
         await callback_query.edit_message_text("Pilih channel untuk dihapus:", reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Gagal menampilkan daftar: {e}")
@@ -221,7 +211,7 @@ async def list_fsub_channels(client, callback_query):
 @Bot.on_callback_query(filters.regex("^confirm_hapus_"))
 async def confirm_delete_fsub(client, callback_query):
     try:
-        channel_id = int(callback_query.data.split("_")[2])
+        channel_id = int(callback_query.data.split("_")[-1])
         await callback_query.edit_message_text(
             f"⚠️ Yakin hapus channel `{channel_id}`?",
             reply_markup=InlineKeyboardMarkup([
@@ -235,7 +225,7 @@ async def confirm_delete_fsub(client, callback_query):
 @Bot.on_callback_query(filters.regex("^hapus_"))
 async def delete_fsub_channel(client, callback_query):
     try:
-        channel_id = int(callback_query.data.split("_")[1])
+        channel_id = int(callback_query.data.split("_")[-1])
         if not await cek_fsub(channel_id):
             return await callback_query.edit_message_text("❌ Channel tidak ditemukan", reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("🔙 Kembali", callback_data="fsub_hapus")]
@@ -274,7 +264,6 @@ async def admin_menu(client, callback_query):
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error: {e}")
 
-# ───── Tambah Admin ─────
 @Bot.on_callback_query(filters.regex("^admin_tambah$"))
 async def tambah_admin(client, callback_query):
     await callback_query.edit_message_text(
@@ -304,7 +293,6 @@ async def tambah_admin(client, callback_query):
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error: {e}")
 
-# ───── List & Hapus Admin ─────
 @Bot.on_callback_query(filters.regex("^admin_hapus$"))
 async def list_admins(client, callback_query):
     try:
@@ -319,28 +307,31 @@ async def list_admins(client, callback_query):
                 name = user.first_name
             except:
                 name = "❓ Unknown"
-            buttons.append([InlineKeyboardButton(f"🗑 {name}", callback_data=f"confirm_adminhapus_{uid}")])
+            buttons.append([InlineKeyboardButton(f"🗑 {name}", callback_data=f"confirm_admin_hapus_{uid}")])
 
         buttons.append([InlineKeyboardButton("🔙 Kembali", callback_data="admin_menu")])
         await callback_query.edit_message_text("Pilih admin untuk dihapus:", reply_markup=InlineKeyboardMarkup(buttons))
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error: {e}")
 
-@Bot.on_callback_query(filters.regex("^confirm_adminhapus_"))
-async def confirm_hapus_admin(client, callback_query):
-    user_id = int(callback_query.data.split("_")[1])
-    await callback_query.edit_message_text(
-        f"⚠️ Yakin ingin menghapus admin `{user_id}`?",
-        reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("✅ Ya", callback_data=f"hapusadmin_{user_id}"),
-             InlineKeyboardButton("❌ Batal", callback_data="admin_hapus")]
-        ])
-    )
+@Bot.on_callback_query(filters.regex("^confirm_admin_hapus_"))
+async def confirm_hapus_admins(client, callback_query):
+    try:
+        user_id = int(callback_query.data.split("_")[-1])  # FIXED HERE
+        await callback_query.edit_message_text(
+            f"⚠️ Yakin ingin menghapus admin `{user_id}`?",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("✅ Ya", callback_data=f"hapus_admin_{user_id}"),
+                 InlineKeyboardButton("❌ Batal", callback_data="admin_hapus")]
+            ])
+        )
+    except Exception as e:
+        await callback_query.edit_message_text(f"❌ Error saat konfirmasi: {e}")
 
-@Bot.on_callback_query(filters.regex("^hapusadmin_"))
+@Bot.on_callback_query(filters.regex("^hapus_admin_"))
 async def hapus_admin(client, callback_query):
     try:
-        user_id = int(callback_query.data.split("_")[1])
+        user_id = int(callback_query.data.split("_")[-1])
         await remove_admin(user_id)
         await callback_query.edit_message_text(
             f"✅ Admin `{user_id}` berhasil dihapus.",
