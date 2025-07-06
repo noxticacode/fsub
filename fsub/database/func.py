@@ -10,9 +10,10 @@ from fsub import *
 
 async def subscribed(filter, client, update):
     user_id = update.from_user.id
-    if user_id in ADMINS and await is_admin(user_id):
+    if user_id in ADMINS:
         return True
-
+    if await is_admin(user_id):
+        return True
     sub = await full_fsub()
     if not sub:
         # Tidak ada channel yang perlu dicek, langsung lolos
