@@ -44,9 +44,9 @@ async def new_post(client: Bot, message: Message):
     link = f"https://t.me/{client.username}?start={base64_string}"
 
     reply_markup = InlineKeyboardMarkup([
-        [InlineKeyboardButton("Bagikan Link", url=f"https://telegram.me/share/url?url={link}")]
+    [InlineKeyboardButton("🔗 Buka Link", url=link)],
+    [InlineKeyboardButton("📤 Bagikan ke Telegram", url=f"https://telegram.me/share/url?url={link}")]
     ])
-
     await reply_text.edit(
         f"Link: {link}",
         reply_markup=reply_markup,
