@@ -53,15 +53,14 @@ async def new_post(client: Bot, message: Message):
         disable_web_page_preview=True,
     )
 
-    xx = await get_disable(client.me.id)
-    if xx is False:
-        try:
-            await post_message.edit_reply_markup(reply_markup)
-        except FloodWait as e:
-            await asyncio.sleep(e.value)
-            await post_message.edit_reply_markup(reply_markup)
-        except Exception:
-            pass
+    
+    try:
+        await post_message.edit_reply_markup(reply_markup)
+    except FloodWait as e:
+        await asyncio.sleep(e.value)
+        await post_message.edit_reply_markup(reply_markup)
+    except Exception:
+        pass
 
 
 @Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_DB))
@@ -70,15 +69,13 @@ async def channel_post(client: Bot, message: Message):
     string = f"get-{converted_id}"
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
-    reply_markup = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton(
-                    "Bagikan Link", url=f"https://telegram.me/share/url?url={link}"
-                )
-            ]
-        ]
-    )
+    
+    reply_markup = InlineKeyboardMarkup([
+    [InlineKeyboardButton("🔗 Buka Link", url=link)],
+    [InlineKeyboardButton("📤 Bagikan ke Telegram", url=f"https://telegram.me/share/url?url={link}")]
+    ])
+
+
     try:
         await message.edit_reply_markup(reply_markup)
     except FloodWait as e:
