@@ -335,7 +335,7 @@ async def hapus_admin(client, callback_query):
         await remove_admin(user_id)
         await callback_query.edit_message_text(
             f"✅ Admin `{user_id}` berhasil dihapus.",
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Kembali", callback_data="admin_hapus")]])
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Kembali", callback_data="admin_del")]])
         )
     except Exception as e:
         await callback_query.edit_message_text(f"❌ Error saat menghapus: {e}")
