@@ -7,7 +7,7 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-APP_ID = int(os.getenv("APP_ID"))
+API_ID = int(os.getenv("API_ID"))
 
 API_HASH = os.getenv("API_HASH")
 

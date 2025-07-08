@@ -11,7 +11,7 @@ class Bot(Client):
     def __init__(self):
         super().__init__(
             name="Bot",
-            api_id=APP_ID,
+            api_id=API_ID,
             api_hash=API_HASH,
             plugins=dict(root="fsub/plugins"),
             bot_token=BOT_TOKEN,
