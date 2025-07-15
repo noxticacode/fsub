@@ -1,6 +1,6 @@
 from pyrogram.types import InlineKeyboardButton
 from pyrogram.errors import ChatAdminRequired
-from fsub import full_fsub
+from fsub import *
 
 async def start_button(client):
     return await generate_fsub_buttons(client)
