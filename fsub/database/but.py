@@ -1,77 +1,56 @@
-from fsub import *
-from fsub.database.data import *
-from pyrogram import enums
 from pyrogram.types import InlineKeyboardButton
+from pyrogram.errors import ChatAdminRequired
+from fsub import full_fsub
 
 async def start_button(client):
-    fsub = await full_fsub()
-    if not fsub:
-        buttons = [
-            [
-                InlineKeyboardButton(text="📚 Bantuan", callback_data="help"),
-                InlineKeyboardButton(text="🚪 Tutup", callback_data="close"),
-            ],
-        ]
-        return buttons
-    
-    buttons = []
-    row = []
-    
-    for i in range(len(fsub)):
-        try:
-            chat = await client.get_chat(fsub[i])
-            try:
-                link = await client.export_chat_invite_link(fsub[i])
-            except ChatAdminRequired:
-                link = f"https://t.me/{chat.username}" if chat.username else "#"
-            row.append(InlineKeyboardButton(f"🔗Join {chat.title}", url=link))
-            
-            if len(row) == 2 or i == len(fsub) - 1:
-                buttons.append(row)
-                row = []
-                
-        except Exception as e:
-            print(f"Error getting chat {fsub[i]}: {e}")
-            continue
-    
-    buttons.append([InlineKeyboardButton(text="📚 Bantuan", callback_data="help")])
-    buttons.append([InlineKeyboardButton(text="🚪 Tutup", callback_data="close")])
-    
-    return buttons
-    
+    return await generate_fsub_buttons(client)
+
 async def fsub_button(client, message):
-    fsub = await full_fsub()
-    buttons = []
-    
-    if fsub:
-        row = []
-        for i in range(len(fsub)):
-            try:
-                chat = await client.get_chat(fsub[i])
-                try:
-                    link = await client.export_chat_invite_link(fsub[i])
-                except ChatAdminRequired:
-                    link = f"https://t.me/{chat.username}" if chat.username else "#"
-                row.append(InlineKeyboardButton(f"🔗Join {chat.title}", url=link))
-                
-                if len(row) == 2 or i == len(fsub) - 1:
-                    buttons.append(row)
-                    row = []
-                    
-            except Exception as e:
-                print(f"Error getting chat {fsub[i]}: {e}")
-                continue
-    
-    # Tambahkan tombol bantuan/tutup baik ada FSub maupun tidak
-    buttons.append([InlineKeyboardButton(text="📚 Bantuan", callback_data="help")])
-    buttons.append([InlineKeyboardButton(text="🚪 Tutup", callback_data="close")])
-    
+    buttons = await generate_fsub_buttons(client)
+
     if len(message.command) > 1:
         buttons.append([
             InlineKeyboardButton(
-                text="🔄 Coba Lagi",
-                url=f"https://t.me/{client.username}?start={message.command[1]}",
+                "🔄 Coba Lagi",
+                url=f"https://t.me/{client.username}?start={message.command[1]}"
             )
         ])
     
+    return buttons
+
+# Fungsi umum untuk membuat tombol fsub
+async def generate_fsub_buttons(client):
+    fsub = await full_fsub()
+    buttons = []
+    row = []
+
+    if fsub:
+        for chat_id in fsub:
+            try:
+                chat = await client.get_chat(chat_id)
+
+                # Gunakan invite_link jika tersedia
+                link = chat.invite_link
+                if not link:
+                    try:
+                        link = await client.export_chat_invite_link(chat_id)
+                    except ChatAdminRequired:
+                        link = f"https://t.me/{chat.username}" if chat.username else "#"
+
+                row.append(InlineKeyboardButton(f"🔗 Join {chat.title}", url=link))
+
+                if len(row) == 2:
+                    buttons.append(row)
+                    row = []
+
+            except Exception as e:
+                print(f"[FSUB] Gagal ambil info chat {chat_id}: {e}")
+                continue
+
+        if row:
+            buttons.append(row)
+
+    # Tambahkan tombol bantuan & tutup
+    buttons.append([InlineKeyboardButton("📚 Bantuan", callback_data="help")])
+    buttons.append([InlineKeyboardButton("🚪 Tutup", callback_data="close")])
     return buttons
