@@ -1,9 +1,28 @@
+import os
 from pyrogram.types import InlineKeyboardButton
 from pyrogram.errors import ChatAdminRequired
 from fsub import *
 
+
+# Ambil semua FORCE_SUB dari .env (dinamis)
+async def full_fsub():
+    fsub_list = []
+    i = 1
+    while True:
+        val = os.getenv(f"FORCE_SUB{i}")
+        if not val:
+            break
+        try:
+            fsub_list.append(int(val))
+        except ValueError:
+            print(f"[FSUB] FORCE_SUB{i} bukan ID valid: {val}")
+        i += 1
+    return fsub_list
+
+
 async def start_button(client):
     return await generate_fsub_buttons(client)
+
 
 async def fsub_button(client, message):
     buttons = await generate_fsub_buttons(client)
@@ -17,6 +36,7 @@ async def fsub_button(client, message):
         ])
     
     return buttons
+
 
 # Fungsi umum untuk membuat tombol fsub
 async def generate_fsub_buttons(client):
